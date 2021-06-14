@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.example.alvin.shop.order.dao.ShopUserMapper">
+  <resultMap id="BaseResultMap" type="org.example.alvin.shop.order.model.ShopUser">
+    <constructor>
+      <idArg column="user_id" javaType="java.lang.Long" jdbcType="BIGINT"/>
+      <arg column="user_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+      <arg column="user_password" javaType="java.lang.String" jdbcType="VARCHAR"/>
+      <arg column="user_mobile" javaType="java.lang.String" jdbcType="VARCHAR"/>
+      <arg column="user_reg_time" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+      <arg column="user_balance" javaType="java.math.BigDecimal" jdbcType="DECIMAL"/>
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    user_id
+    , user_name, user_password, user_mobile, user_reg_time, user_balance
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from shop_user
+    where user_id = #{userId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete
+    from shop_user
+    where user_id = #{userId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="org.example.alvin.shop.order.model.ShopUser">
+    insert into shop_user (user_id, user_name, user_password,
+                           user_mobile, user_reg_time, user_balance)
+    values (#{userId,jdbcType=BIGINT}, #{userName,jdbcType=VARCHAR},
+            #{userPassword,jdbcType=VARCHAR},
+            #{userMobile,jdbcType=VARCHAR}, #{userRegTime,jdbcType=TIMESTAMP},
+            #{userBalance,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="org.example.alvin.shop.order.model.ShopUser">
+    insert into shop_user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="userName != null">
+        user_name,
+      </if>
+      <if test="userPassword != null">
+        user_password,
+      </if>
+      <if test="userMobile != null">
+        user_mobile,
+      </if>
+      <if test="userRegTime != null">
+        user_reg_time,
+      </if>
+      <if test="userBalance != null">
+        user_balance,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="userName != null">
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="userPassword != null">
+        #{userPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="userMobile != null">
+        #{userMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="userRegTime != null">
+        #{userRegTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userBalance != null">
+        #{userBalance,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective"
+    parameterType="org.example.alvin.shop.order.model.ShopUser">
+    update shop_user
+    <set>
+      <if test="userName != null">
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="userPassword != null">
+        user_password = #{userPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="userMobile != null">
+        user_mobile = #{userMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="userRegTime != null">
+        user_reg_time = #{userRegTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userBalance != null">
+        user_balance = #{userBalance,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where user_id = #{userId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.example.alvin.shop.order.model.ShopUser">
+    update shop_user
+    set user_name     = #{userName,jdbcType=VARCHAR},
+        user_password = #{userPassword,jdbcType=VARCHAR},
+        user_mobile   = #{userMobile,jdbcType=VARCHAR},
+        user_reg_time = #{userRegTime,jdbcType=TIMESTAMP},
+        user_balance  = #{userBalance,jdbcType=DECIMAL}
+    where user_id = #{userId,jdbcType=BIGINT}
+  </update>
+</mapper>
